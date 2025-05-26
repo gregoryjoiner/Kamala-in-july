@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phuket Family Guide</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header>
+        <h1>Phuket Family Survival Guide</h1>
+        <p>Your go-to travel companion for ethical family adventures</p>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="logistics.html">Planning</a>
+        <a href="daytrips.html">Trips</a>
+    </nav>
+    <main>
+        <section>
+            <h2>AED to THB Conversion</h2>
+            <p>This table updates live using the latest exchange rates.</p>
+            <table>
+                <thead>
+                    <tr><th>AED</th><th>THB (Live)</th></tr>
+                </thead>
+                <tbody id="conversion-rows">
+                    <tr><td>10</td><td id="aed10">Loading...</td></tr>
+                    <tr><td>50</td><td id="aed50">Loading...</td></tr>
+                    <tr><td>100</td><td id="aed100">Loading...</td></tr>
+                    <tr><td>250</td><td id="aed250">Loading...</td></tr>
+                    <tr><td>500</td><td id="aed500">Loading...</td></tr>
+                    <tr><td>1000</td><td id="aed1000">Loading...</td></tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <div class="card">
+                <h3>Explore with Confidence</h3>
+                <p>This site is your trusted guide to ethical, practical, and joyful family travel in Phuket. Navigate using the menu above to access tips, excursions, and planning tools.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        &copy; 2025 Phuket Family Survival Guide | Inspired by TripAdvisor
+    </footer>
+    <script>
+        fetch('https://v6.exchangerate-api.com/v6/87fcdc03339e13c185720c28/latest/THB')
+            .then(res => res.json())
+            .then(data => {
+                const rate = data.conversion_rates.AED;
+                const inverse = 1 / rate;
+                const aedValues = [10, 50, 100, 250, 500, 1000];
+                aedValues.forEach(val => {
+                    const thb = (val * inverse).toFixed(2);
+                    document.getElementById("aed" + val).innerText = thb;
+                });
+            })
+            .catch(() => {
+                document.getElementById("conversion-rows").innerHTML = "<tr><td colspan='2'>Unable to fetch rate.</td></tr>";
+            });
+    </script>
+</body>
+</html>
